@@ -158,31 +158,61 @@ const deleteUser = async (req, res) => {
     }
   };
 
+  // const deleteBooking = async (req, res) => {
+  //   try {
+  //     userId=req.user
+  //     const { id } = req.params;
+  //     const deleted = await bookingModel.findByIdAndDelete(id);
+
+  //     car_id=deleted.carId
+  //     if(!car_id){
+  //       return res.status(404).json({ error: "Car not found" });
+  //     }
+  //     const available= await carModels.findByIdAndUpdate(car_id,{availability:true})
+  //     if(!available){
+  //       return res.status(404).json({ error: "Can't change availability" });
+  //     }
+  
+  //     if (!deleted) {
+  //       return res.status(404).json({ error: "Booking not found" });
+  //     }
+  
+  //     return res.status(200).json({ message: "Deleted" });
+  //   } catch (error) {
+  //     console.error(error);
+  //     return res.status(400).json({ error: "Failed to delete booking" });
+  //   }
+  // };
+
+
   const deleteBooking = async (req, res) => {
     try {
-      userId=req.user
       const { id } = req.params;
       const deleted = await bookingModel.findByIdAndDelete(id);
-
-      car_id=deleted.carId
-      if(!car_id){
-        return res.status(404).json({ error: "Car not found" });
-      }
-      const available= await carModels.findByIdAndUpdate(car_id,{availability:true})
-      if(!available){
-        return res.status(404).json({ error: "Can't change availability" });
-      }
   
       if (!deleted) {
         return res.status(404).json({ error: "Booking not found" });
       }
   
+      const car_id = deleted.carId;
+      if (!car_id) {
+        return res.status(404).json({ error: "Car not found" });
+      }
+  
+      const available = await carModels.findByIdAndUpdate(car_id, { availability: true });
+      if (!available) {
+        return res.status(404).json({ error: "Can't change availability" });
+      }
+  
       return res.status(200).json({ message: "Deleted" });
     } catch (error) {
       console.error(error);
-      return res.status(400).json({ error: "Failed to delete Dealer" });
+      return res.status(400).json({ error: "Failed to delete booking" });
     }
   };
+  
+
+
   
   const getAllCars = async (req, res) => {
       try {
