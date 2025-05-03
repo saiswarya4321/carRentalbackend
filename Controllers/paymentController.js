@@ -33,9 +33,8 @@ const paymentFunction = async (req, res) => {
       payment_method_types: ['card'],
       line_items: line_items,
       mode: 'payment',
-      success_url: `https://car-rental-frontend-amber.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-
-      cancel_url: `https://car-rental-frontend-amber.vercel.app/payment/failed`,
+      success_url: `${process.env.FRONTEND_URL}/userdashboard/payment/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/payment/failed`,
     });
 
     res.status(200).json({ success: true, sessionId: session.id, url: session.url });
