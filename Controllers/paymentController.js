@@ -33,7 +33,8 @@ const paymentFunction = async (req, res) => {
       payment_method_types: ['card'],
       line_items: line_items,
       mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL}/userdashboard/payment/success`,
+      success_url: `${process.env.FRONTEND_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+
       cancel_url: `${process.env.FRONTEND_URL}/payment/failed`,
     });
 
