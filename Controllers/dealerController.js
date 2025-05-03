@@ -57,7 +57,12 @@ const login=async (req,res)=>{
         }
         const token=createToken(userExist._id,userExist.role)
         console.log("token",token)
-  res.cookie("token",token)
+//   res.cookie("token",token)
+res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
   return res.status(200).json({message:"Login successfully!",userExist,token})
     }
   catch (error) {
